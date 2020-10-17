@@ -1,6 +1,9 @@
 class InvoiceItem < ApplicationRecord
-  validate :item_id,
+  belongs_to :item
+  belongs_to :invoice
+
+  validates :item_id,
            :invoice_id,
            :quantity,
-           :unit_price
+           :unit_price, presence: true
 end
