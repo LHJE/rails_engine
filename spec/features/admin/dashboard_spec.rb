@@ -12,7 +12,7 @@ RSpec.describe 'Admin Dashboard' do
     end
 
     it "I can see things" do
-      # require "pry"; binding.pry
+      # require "pry"; binding.pry 
     end
   end
 end
