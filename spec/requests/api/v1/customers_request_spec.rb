@@ -64,7 +64,6 @@ describe "Customers API" do
     customer_params = { first_name: "Georgeous" }
     headers = {"CONTENT_TYPE" => "application/json"}
 
-    # We include this header to make sure that these params are passed as JSON rather than as plain text
     patch "/api/v1/customers/#{id}", headers: headers, params: JSON.generate({customer: customer_params})
     customer = Customer.find_by(id: id)
 
