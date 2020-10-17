@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe 'Admin Dashboard' do
   describe 'As an Admin' do
     before :each do
-      @customers = Customer.load_customers('db/data/customers.csv')
-      @merchants = Merchant.load_merchants('db/data/merchants.csv')
-      @items = Item.load_items('db/data/items.csv')
-      @invoices = Invoice.load_invoices('db/data/invoices.csv')
-      @invoice_items = InvoiceItem.load_invoice_items('db/data/invoice_items.csv')
-      @transactions = Transaction.load_transactions('db/data/transactions.csv')
+      Customer.load_customers('db/data/customers.csv')
+      Merchant.load_merchants('db/data/merchants.csv')
+      Item.load_items('db/data/items.csv')
+      Invoice.load_invoices('db/data/invoices.csv')
+      InvoiceItem.load_invoice_items('db/data/invoice_items.csv')
+      Transaction.load_transactions('db/data/transactions.csv')
       require "pry"; binding.pry
       # @customer_1 = Customer.create!(first_name: "Joey", last_name: "Ondricka")
       # @merchant_1 = Merchant.create!(name: "Schroeder-Jerde")
@@ -19,12 +19,6 @@ RSpec.describe 'Admin Dashboard' do
     end
 
     it "I can see things" do
-      # csv_table = CSV.parse(File.read('db/data/customers.csv'), headers: true)
-      # json_string = csv_table.map(&:to_h).to_json
-      customers = []
-      CSV.foreach('db/data/customers.csv', headers: true, header_converters: :symbol) do |data|
-        customers << Customer.new(data.to_h)
-      end
       require "pry"; binding.pry
     end
   end
