@@ -1,6 +1,10 @@
 class Item < ApplicationRecord
-  validate :name,
+  belongs_to :merchant
+
+  has_many :invoices, through: :invoice_items
+
+  validates :name,
            :description,
            :unit_price,
-           :merchant_id
+           :merchant_id, presence: true
 end
