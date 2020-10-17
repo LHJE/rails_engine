@@ -8,12 +8,11 @@ describe "Customers API" do
 
     expect(response).to be_successful
 
-    customers = JSON.parse(response.body)
+    customers = JSON.parse(response.body, symbolize_names: true)
 
     expect(customers.count).to eq(3)
 
     customers.each do |customer|
-      require "pry"; binding.pry
       expect(customer).to have_key(:id)
       expect(customer[:id]).to be_an(Integer)
 
