@@ -57,4 +57,19 @@ describe "Customers API" do
     expect(created_customer.first_name).to eq(customer_params[:first_name])
     expect(created_customer.last_name).to eq(customer_params[:last_name])
   end
+
+  it "can update an existing customer" do
+    id = create(:customer).id
+    previous_name = Customer.last.first_name
+    customer_params = { first_name: "Georgeous" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    # We include this header to make sure that these params are passed as JSON rather than as plain text
+    patch "/api/v1/customers/#{id}", headers: headers, params: JSON.generate({customer: customer_params})
+    customer = Customer.find_by(id: id)
+
+    expect(response).to be_successful
+    expect(customer.first_name).to_not eq(previous_name)
+    expect(customer.first_name).to eq("Georgeous")
+  end
 end
