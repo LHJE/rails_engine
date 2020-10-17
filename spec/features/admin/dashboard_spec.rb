@@ -3,7 +3,13 @@ require 'rails_helper'
 RSpec.describe 'Admin Dashboard' do
   describe 'As an Admin' do
     before :each do
-      customers = Customer.load_customers('db/data/customers.csv')
+      @customers = Customer.load_customers('db/data/customers.csv')
+      @merchants = Merchant.load_merchants('db/data/merchants.csv')
+      @items = Item.load_items('db/data/items.csv')
+      @invoices = Invoice.load_invoices('db/data/invoices.csv')
+      @invoice_items = InvoiceItem.load_invoice_items('db/data/invoice_items.csv')
+      @transactions = Transaction.load_transactions('db/data/transactions.csv')
+      require "pry"; binding.pry
       # @customer_1 = Customer.create!(first_name: "Joey", last_name: "Ondricka")
       # @merchant_1 = Merchant.create!(name: "Schroeder-Jerde")
       # @item_1 = Item.create!(name: "Item Qui Esse", description: "Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.", unit_price: "75107", merchant_id: @merchant_1.id)
