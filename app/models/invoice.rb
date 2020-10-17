@@ -12,7 +12,7 @@ class Invoice < ApplicationRecord
   def self.load_invoices(file_path)
     invoices = []
     CSV.foreach(file_path, headers: true, header_converters: :symbol) do |data|
-      invoices << Invoice.new(data.to_h)
+      invoices << Invoice.create!(customer_id: data.to_h[:customer_id], merchant_id: data.to_h[:merchant_id], status: data.to_h[:status])
     end
     invoices
   end
