@@ -42,4 +42,19 @@ describe "Customers API" do
     expect(customer).to have_key(:last_name)
     expect(customer[:last_name]).to be_a(String)
   end
+
+  it "can create a new customer" do
+    customer_params = ({
+                    first_name: 'Jackie',
+                    last_name: 'Chan'
+                  })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/customers", headers: headers, params: JSON.generate(customer: customer_params)
+    created_customer = Customer.last
+
+    expect(response).to be_successful
+    expect(created_customer.title).to eq(customer_params[:first_name])
+    expect(created_customer.author).to eq(customer_params[:last_name])
+  end
 end
