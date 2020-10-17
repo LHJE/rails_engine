@@ -15,6 +15,10 @@ class Api::V1::CustomersController < ApplicationController
     render json: Customer.update(params[:id], customer_params)
   end
 
+  def destroy
+    render json: Customer.delete(params[:id])
+  end
+
   private
 
   def customer_params
