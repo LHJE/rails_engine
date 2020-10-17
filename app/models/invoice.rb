@@ -8,4 +8,12 @@ class Invoice < ApplicationRecord
   validates :customer_id,
            :merchant_id,
            :status, presence: true
+
+  def self.load_invoices(file_path)
+    invoices = []
+    CSV.foreach(file_path, headers: true, header_converters: :symbol) do |data|
+      invoices << Invoice.new(data.to_h)
+    end
+    invoices
+  end
 end
