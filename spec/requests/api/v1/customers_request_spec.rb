@@ -11,5 +11,17 @@ describe "Customers API" do
     customers = JSON.parse(response.body)
 
     expect(customers.count).to eq(3)
+
+    customers.each do |customer|
+      require "pry"; binding.pry
+      expect(customer).to have_key(:id)
+      expect(customer[:id]).to be_an(Integer)
+
+      expect(customer).to have_key(:first_name)
+      expect(customer[:first_name]).to be_a(String)
+
+      expect(customer).to have_key(:last_name)
+      expect(customer[:last_name]).to be_a(String)
+    end
   end
 end
