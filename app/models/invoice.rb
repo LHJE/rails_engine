@@ -1,5 +1,11 @@
 class Invoice < ApplicationRecord
-  validate :customer_id,
+  has_many :items, through: :invoice_items
+  has_many :transactions
+
+  belongs_to :customer
+  belongs_to :merchant
+
+  validates :customer_id,
            :merchant_id,
-           :status
+           :status, presence: true
 end
