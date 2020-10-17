@@ -1,4 +1,6 @@
 class Customer < ApplicationRecord
-  validate :first_name,
-           :last_name
+  has_many :invoices
+
+  validates :first_name,
+           :last_name, presence: true
 end
