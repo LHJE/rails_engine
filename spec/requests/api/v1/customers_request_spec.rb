@@ -54,7 +54,7 @@ describe "Customers API" do
     created_customer = Customer.last
 
     expect(response).to be_successful
-    expect(created_customer.title).to eq(customer_params[:first_name])
-    expect(created_customer.author).to eq(customer_params[:last_name])
+    expect(created_customer.first_name).to eq(customer_params[:first_name])
+    expect(created_customer.last_name).to eq(customer_params[:last_name])
   end
 end
