@@ -64,7 +64,7 @@ describe "Transactions API" do
     expect(response).to be_successful
     expect(created_transaction.invoice_id).to eq(transaction_params[:invoice_id])
     expect(created_transaction.credit_card_number).to eq(transaction_params[:credit_card_number])
-    expect(created_transaction.credit_card_expiration_date).to eq(transaction_params[:credit_card_expiration_date])
+    expect("#{created_transaction.credit_card_expiration_date}").to eq(transaction_params[:credit_card_expiration_date])
     expect(created_transaction.result).to eq(transaction_params[:result])
   end
 
