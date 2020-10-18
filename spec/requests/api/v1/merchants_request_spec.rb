@@ -36,7 +36,7 @@ describe "Merchants API" do
     expect(merchant).to have_key(:name)
     expect(merchant[:name]).to be_a(String)
   end
-  
+
   it "can create a new merchant" do
     merchant_params = ({
                     name: 'Persnickities',
@@ -49,4 +49,19 @@ describe "Merchants API" do
     expect(response).to be_successful
     expect(created_merchant.name).to eq(merchant_params[:name])
   end
+
+  it "can update an existing merchant" do
+    id = create(:merchant).id
+    previous_name = Merchant.last.name
+    merchant_params = { name: "Persnickities" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    patch "/api/v1/merchants/#{id}", headers: headers, params: JSON.generate({merchant: merchant_params})
+    merchant = Merchant.find_by(id: id)
+
+    expect(response).to be_successful
+    expect(merchant.name).to_not eq(previous_name)
+    expect(merchant.name).to eq("Persnickities")
+  end
+
 end
