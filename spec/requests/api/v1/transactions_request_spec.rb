@@ -16,11 +16,14 @@ describe "Transactions API" do
       expect(transaction).to have_key(:id)
       expect(transaction[:id]).to be_an(Integer)
 
+      expect(transaction).to have_key(:credit_card_number)
+      expect(transaction[:credit_card_number]).to be_a(Integer)
+
+      expect(transaction).to have_key(:credit_card_expiration_date)
+      expect(transaction[:credit_card_expiration_date]).to eq(nil)
+
       expect(transaction).to have_key(:result)
       expect(transaction[:result]).to be_a(String)
-
-      expect(transaction).to have_key(:last_name)
-      expect(transaction[:last_name]).to be_a(String)
     end
   end
 
@@ -36,11 +39,14 @@ describe "Transactions API" do
     expect(transaction).to have_key(:id)
     expect(transaction[:id]).to eq(id)
 
+    expect(transaction).to have_key(:credit_card_number)
+    expect(transaction[:credit_card_number]).to be_a(Integer)
+
+    expect(transaction).to have_key(:credit_card_expiration_date)
+    expect(transaction[:credit_card_expiration_date]).to eq(nil)
+
     expect(transaction).to have_key(:result)
     expect(transaction[:result]).to be_a(String)
-
-    expect(transaction).to have_key(:last_name)
-    expect(transaction[:last_name]).to be_a(String)
   end
 
   it "can create a new transaction" do
