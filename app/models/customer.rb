@@ -2,8 +2,7 @@ class Customer < ApplicationRecord
   has_many :invoices
 
   validates :first_name,
-           :last_name, presence: true
-
+            :last_name, presence: true
 
   # def self.load_customers(file_path)
   #   customers = []

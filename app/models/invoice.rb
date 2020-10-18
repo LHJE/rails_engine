@@ -6,8 +6,8 @@ class Invoice < ApplicationRecord
   belongs_to :merchant
 
   validates :customer_id,
-           :merchant_id,
-           :status, presence: true
+            :merchant_id,
+            :status, presence: true
 
   # def self.load_invoices(file_path)
   #   invoices = []

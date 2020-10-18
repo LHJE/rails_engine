@@ -3,9 +3,9 @@ class InvoiceItem < ApplicationRecord
   belongs_to :invoice
 
   validates :item_id,
-           :invoice_id,
-           :quantity,
-           :unit_price, presence: true
+            :invoice_id,
+            :quantity,
+            :unit_price, presence: true
 
   # def self.load_invoice_items(file_path)
   #   invoice_items = []

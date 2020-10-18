@@ -1,5 +1,4 @@
 class Api
-
   # def load_api(path, customer_file, merchant_file, item_file, invoice_file, invoice_item_file, transaction_file)
   #   customers = Customer.load_customers('#{path}/#{customer_file}')
   #   merchants = Merchant.load_merchants('#{path}/#{merchant_file}')

@@ -7,8 +7,8 @@ class Transaction < ApplicationRecord
   #          :result, presence: true
 
   validates :invoice_id,
-           :credit_card_number,
-           :result, presence: true
+            :credit_card_number,
+            :result, presence: true
 
   # def self.load_transactions(file_path)
   #   transactions = []

@@ -4,9 +4,9 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
 
   validates :name,
-           :description,
-           :unit_price,
-           :merchant_id, presence: true
+            :description,
+            :unit_price,
+            :merchant_id, presence: true
 
   # def self.load_items(file_path)
   #   items = []
