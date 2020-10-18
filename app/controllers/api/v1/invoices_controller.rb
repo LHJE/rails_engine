@@ -1,27 +1,31 @@
-class Api::V1::InvoicesController < ApplicationController
-  def index
-    render json: Invoice.all
-  end
+module Api
+  module V1
+    class InvoicesController < ApplicationController
+      def index
+        render json: Invoice.all
+      end
 
-  def show
-    render json: Invoice.find(params[:id])
-  end
+      def show
+        render json: Invoice.find(params[:id])
+      end
 
-  def create
-    render json: Invoice.create(invoice_params)
-  end
+      def create
+        render json: Invoice.create(invoice_params)
+      end
 
-  def update
-    render json: Invoice.update(params[:id], invoice_params)
-  end
+      def update
+        render json: Invoice.update(params[:id], invoice_params)
+      end
 
-  def destroy
-    render json: Invoice.delete(params[:id])
-  end
+      def destroy
+        render json: Invoice.delete(params[:id])
+      end
 
-  private
+      private
 
-  def invoice_params
-    params.require(:invoice).permit(:customer_id, :merchant_id, :status)
+      def invoice_params
+        params.require(:invoice).permit(:customer_id, :merchant_id, :status)
+      end
+    end
   end
 end
