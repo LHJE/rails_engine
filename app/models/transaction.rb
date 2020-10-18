@@ -1,5 +1,5 @@
 class Transaction < ApplicationRecord
-  has_many :invoices
+  has_many :invoices, through: :invoice
 
   # validates :invoice_id,
   #          :credit_card_number,
