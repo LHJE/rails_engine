@@ -8,13 +8,13 @@ RSpec.describe Item, type: :model do
     it { should validate_presence_of :merchant_id }
   end
 
-  describe 'Class Methods' do
-    it "can load items" do
-      Merchant.load_merchants('spec/fixtures/files/merchants_fixtures.csv')
-
-      Item.load_items('spec/fixtures/files/items_fixtures.csv')
-
-      expect("#{Item.where(id: 1).class}").to eq("Item::ActiveRecord_Relation")
-    end
-  end
+  # describe 'Class Methods' do
+  #   it "can load items" do
+  #     Merchant.load_merchants('spec/fixtures/files/merchants_fixtures.csv')
+  #
+  #     Item.load_items('spec/fixtures/files/items_fixtures.csv')
+  #
+  #     expect("#{Item.where(id: 1).class}").to eq("Item::ActiveRecord_Relation")
+  #   end
+  # end
 end
