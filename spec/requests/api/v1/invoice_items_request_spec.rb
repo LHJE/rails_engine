@@ -59,8 +59,8 @@ describe "InvoiceItems API" do
     invoice_item_params = ({
                         item_id: 1,
                         invoice_id: 1345134,
-                        quantity: 'Jackie',
-                        unit_price: 'Chan'
+                        quantity: 12,
+                        unit_price: 75107
                       })
     headers = {"CONTENT_TYPE" => "application/json"}
 
