@@ -9,6 +9,7 @@ describe "Customers API" do
     expect(response).to be_successful
 
     customers = JSON.parse(response.body, symbolize_names: true)
+
     expect(customers[:data].count).to eq(3)
 
     customers[:data].each do |customer|
@@ -32,14 +33,14 @@ describe "Customers API" do
 
     customer = JSON.parse(response.body, symbolize_names: true)
 
-    expect(customer[:data]).to have_key(:id)
-    expect(customer[:data][:id]).to eq("#{id}")
+    expect(customer[:data][:attributes]).to have_key(:id)
+    expect(customer[:data][:attributes][:id]).to eq(id)
 
-    expect(customer[:data]).to have_key(:first_name)
-    expect(customer[:data][:first_name]).to be_a(String)
+    expect(customer[:data][:attributes]).to have_key(:first_name)
+    expect(customer[:data][:attributes][:first_name]).to be_a(String)
 
-    expect(customer[:data]).to have_key(:last_name)
-    expect(customer[:data][:last_name]).to be_a(String)
+    expect(customer[:data][:attributes]).to have_key(:last_name)
+    expect(customer[:data][:attributes][:last_name]).to be_a(String)
   end
 
   it "can create a new customer" do
