@@ -39,20 +39,20 @@ describe "InvoiceItems API" do
 
     invoice_item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(invoice_item).to have_key(:id)
-    expect(invoice_item[:id]).to eq(id)
+    expect(invoice_item[:data]).to have_key(:id)
+    expect(invoice_item[:data][:id]).to eq(id)
 
-    expect(invoice_item).to have_key(:item_id)
-    expect(invoice_item[:item_id]).to be_a(Integer)
+    expect(invoice_item[:data]).to have_key(:item_id)
+    expect(invoice_item[:data][:item_id]).to be_a(Integer)
 
-    expect(invoice_item).to have_key(:invoice_id)
-    expect(invoice_item[:invoice_id]).to be_a(Integer)
+    expect(invoice_item[:data]).to have_key(:invoice_id)
+    expect(invoice_item[:data][:invoice_id]).to be_a(Integer)
 
-    expect(invoice_item).to have_key(:quantity)
-    expect(invoice_item[:quantity]).to be_a(Integer)
+    expect(invoice_item[:data]).to have_key(:quantity)
+    expect(invoice_item[:data][:quantity]).to be_a(Integer)
 
-    expect(invoice_item).to have_key(:unit_price)
-    expect(invoice_item[:unit_price]).to be_a(Integer)
+    expect(invoice_item[:data]).to have_key(:unit_price)
+    expect(invoice_item[:data][:unit_price]).to be_a(Integer)
   end
 
   it "can create a new invoice_item" do
