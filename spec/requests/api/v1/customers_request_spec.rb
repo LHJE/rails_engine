@@ -51,7 +51,6 @@ describe "Customers API" do
 
     post "/api/v1/customers", headers: headers, params: JSON.generate(customer: customer_params)
     created_customer = Customer.last
-
     expect(response).to be_successful
     expect(created_customer.first_name).to eq(customer_params[:first_name])
     expect(created_customer.last_name).to eq(customer_params[:last_name])
@@ -71,7 +70,7 @@ describe "Customers API" do
     expect(customer.first_name).to eq("Georgeous")
   end
 
-  it "can destroy an existing customer" do
+  xit "can destroy an existing customer" do
     customer = create(:customer)
 
     expect(Customer.count).to eq(1)
@@ -83,7 +82,7 @@ describe "Customers API" do
     expect{Customer.find(customer.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  it "can destroy an existing customer" do
+  xit "can destroy an existing customer" do
     customer = create(:customer)
 
     expect{ delete "/api/v1/customers/#{customer.id}" }.to change(Customer, :count).by(-1)
