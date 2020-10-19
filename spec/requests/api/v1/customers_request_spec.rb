@@ -9,18 +9,17 @@ describe "Customers API" do
     expect(response).to be_successful
 
     customers = JSON.parse(response.body, symbolize_names: true)
+    expect(customers[:data].count).to eq(3)
 
-    expect(customers.count).to eq(3)
+    customers[:data].each do |customer|
+      expect(customer[:attributes]).to have_key(:id)
+      expect(customer[:attributes][:id]).to be_an(Integer)
 
-    customers.each do |customer|
-      expect(customer).to have_key(:id)
-      expect(customer[:id]).to be_an(Integer)
+      expect(customer[:attributes]).to have_key(:first_name)
+      expect(customer[:attributes][:first_name]).to be_a(String)
 
-      expect(customer).to have_key(:first_name)
-      expect(customer[:first_name]).to be_a(String)
-
-      expect(customer).to have_key(:last_name)
-      expect(customer[:last_name]).to be_a(String)
+      expect(customer[:attributes]).to have_key(:last_name)
+      expect(customer[:attributes][:last_name]).to be_a(String)
     end
   end
 
@@ -32,7 +31,7 @@ describe "Customers API" do
     expect(response).to be_successful
 
     customer = JSON.parse(response.body, symbolize_names: true)
-
+    # require "pry"; binding.pry
     expect(customer).to have_key(:id)
     expect(customer[:id]).to eq(id)
 
