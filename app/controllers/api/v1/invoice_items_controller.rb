@@ -2,19 +2,19 @@ module Api
   module V1
     class InvoiceItemsController < ApplicationController
       def index
-        render json: InvoiceItem.all
+        render json: InvoiceItemSerializer.new(InvoiceItem.all)
       end
 
       def show
-        render json: InvoiceItem.find(params[:id])
+        render json: InvoiceItemSerializer.new(InvoiceItem.find(params[:id]))
       end
 
       def create
-        render json: InvoiceItem.create(invoice_item_params)
+        render json: InvoiceItemSerializer.new(InvoiceItem.create(invoice_item_params))
       end
 
       def update
-        render json: InvoiceItem.update(params[:id], invoice_item_params)
+        render json: InvoiceItemSerializer.new(InvoiceItem.update(params[:id], invoice_item_params))
       end
 
       def destroy

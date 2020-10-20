@@ -7,6 +7,8 @@ gem 'rack-cors'
 
 gem 'simplecov', require: false, group: :test
 
+gem 'fast_jsonapi'
+
 gem 'activerecord-reset-pk-sequence'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

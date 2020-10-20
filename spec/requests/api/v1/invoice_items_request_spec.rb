@@ -10,23 +10,23 @@ describe "InvoiceItems API" do
 
     invoice_items = JSON.parse(response.body, symbolize_names: true)
 
-    expect(invoice_items.count).to eq(3)
+    expect(invoice_items[:data].count).to eq(3)
 
-    invoice_items.each do |invoice_item|
-      expect(invoice_item).to have_key(:id)
-      expect(invoice_item[:id]).to be_an(Integer)
+    invoice_items[:data].each do |invoice_item|
+      expect(invoice_item[:attributes]).to have_key(:id)
+      expect(invoice_item[:attributes][:id]).to be_an(Integer)
 
-      expect(invoice_item).to have_key(:item_id)
-      expect(invoice_item[:item_id]).to be_a(Integer)
+      expect(invoice_item[:attributes]).to have_key(:item_id)
+      expect(invoice_item[:attributes][:item_id]).to be_a(Integer)
 
-      expect(invoice_item).to have_key(:invoice_id)
-      expect(invoice_item[:invoice_id]).to be_a(Integer)
+      expect(invoice_item[:attributes]).to have_key(:invoice_id)
+      expect(invoice_item[:attributes][:invoice_id]).to be_a(Integer)
 
-      expect(invoice_item).to have_key(:quantity)
-      expect(invoice_item[:quantity]).to be_a(Integer)
+      expect(invoice_item[:attributes]).to have_key(:quantity)
+      expect(invoice_item[:attributes][:quantity]).to be_a(Integer)
 
-      expect(invoice_item).to have_key(:unit_price)
-      expect(invoice_item[:unit_price]).to be_a(Integer)
+      expect(invoice_item[:attributes]).to have_key(:unit_price)
+      expect(invoice_item[:attributes][:unit_price]).to be_a(Integer)
     end
   end
 
@@ -39,20 +39,20 @@ describe "InvoiceItems API" do
 
     invoice_item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(invoice_item).to have_key(:id)
-    expect(invoice_item[:id]).to eq(id)
+    expect(invoice_item[:data][:attributes]).to have_key(:id)
+    expect(invoice_item[:data][:attributes][:id]).to eq(id)
 
-    expect(invoice_item).to have_key(:item_id)
-    expect(invoice_item[:item_id]).to be_a(Integer)
+    expect(invoice_item[:data][:attributes]).to have_key(:item_id)
+    expect(invoice_item[:data][:attributes][:item_id]).to be_a(Integer)
 
-    expect(invoice_item).to have_key(:invoice_id)
-    expect(invoice_item[:invoice_id]).to be_a(Integer)
+    expect(invoice_item[:data][:attributes]).to have_key(:invoice_id)
+    expect(invoice_item[:data][:attributes][:invoice_id]).to be_a(Integer)
 
-    expect(invoice_item).to have_key(:quantity)
-    expect(invoice_item[:quantity]).to be_a(Integer)
+    expect(invoice_item[:data][:attributes]).to have_key(:quantity)
+    expect(invoice_item[:data][:attributes][:quantity]).to be_a(Integer)
 
-    expect(invoice_item).to have_key(:unit_price)
-    expect(invoice_item[:unit_price]).to be_a(Integer)
+    expect(invoice_item[:data][:attributes]).to have_key(:unit_price)
+    expect(invoice_item[:data][:attributes][:unit_price]).to be_a(Integer)
   end
 
   it "can create a new invoice_item" do
@@ -109,5 +109,4 @@ describe "InvoiceItems API" do
     expect(response).to be_success
     expect{InvoiceItem.find(invoice_item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
-
 end
