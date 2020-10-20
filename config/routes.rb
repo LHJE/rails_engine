@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :merchants
       get "merchants/:id/items", to: 'merchants#items'
       resources :items
-      get "items/:id/merchant", to: 'items#merchant'
+      get "items/:id/merchants", to: 'items#merchant'
       resources :invoices
       resources :invoice_items
       resources :transactions
