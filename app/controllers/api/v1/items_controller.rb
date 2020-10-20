@@ -21,6 +21,10 @@ module Api
         render json: ItemSerializer.new(Item.delete(params[:id]))
       end
 
+      def merchant
+        render json: MerchantSerializer.new(Merchant.find(params[:id]))
+      end
+
       private
 
       def item_params
