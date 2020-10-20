@@ -71,7 +71,7 @@ describe "Customers API" do
     expect(customer.first_name).to eq("Georgeous")
   end
 
-  xit "can destroy an existing customer" do
+  it "can destroy an existing customer" do
     customer = create(:customer)
 
     expect(Customer.count).to eq(1)
@@ -83,7 +83,7 @@ describe "Customers API" do
     expect{Customer.find(customer.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  xit "can destroy an existing customer" do
+  it "can destroy an existing customer" do
     customer = create(:customer)
 
     expect{ delete "/api/v1/customers/#{customer.id}" }.to change(Customer, :count).by(-1)
