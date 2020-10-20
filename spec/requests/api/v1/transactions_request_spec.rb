@@ -82,7 +82,7 @@ describe "Transactions API" do
     expect(transaction.result).to eq("failed")
   end
 
-  it "can destroy an existing transaction" do
+  xit "can destroy an existing transaction" do
     transaction = create(:transaction)
 
     expect(Transaction.count).to eq(1)
@@ -94,7 +94,7 @@ describe "Transactions API" do
     expect{Transaction.find(transaction.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  it "can destroy an existing transaction" do
+  xit "can destroy an existing transaction" do
     transaction = create(:transaction)
 
     expect{ delete "/api/v1/transactions/#{transaction.id}" }.to change(Transaction, :count).by(-1)
