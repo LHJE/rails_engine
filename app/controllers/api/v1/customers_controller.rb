@@ -18,7 +18,7 @@ module Api
       end
 
       def destroy
-        render json: CustomerSerializer.new(Customer.delete(params[:id]))
+        render json: Customer.delete(params[:id])
       end
 
       private
