@@ -18,7 +18,7 @@ module Api
       end
 
       def destroy
-        render json: InvoiceSerializer.new(Invoice.delete(params[:id]))
+        render json: Invoice.delete(params[:id])
       end
 
       private
