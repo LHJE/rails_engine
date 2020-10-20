@@ -2,23 +2,23 @@ module Api
   module V1
     class TransactionsController < ApplicationController
       def index
-        render json: Transaction.all
+        render json: TransactionSerializer.new(Transaction.all)
       end
 
       def show
-        render json: Transaction.find(params[:id])
+        render json: TransactionSerializer.new(Transaction.find(params[:id]))
       end
 
       def create
-        render json: Transaction.create(transaction_params)
+        render json: TransactionSerializer.new(Transaction.create(transaction_params))
       end
 
       def update
-        render json: Transaction.update(params[:id], transaction_params)
+        render json: TransactionSerializer.new(Transaction.update(params[:id], transaction_params))
       end
 
       def destroy
-        render json: Transaction.delete(params[:id])
+        render json: TransactionSerializer.new(Transaction.delete(params[:id]))
       end
 
       private
