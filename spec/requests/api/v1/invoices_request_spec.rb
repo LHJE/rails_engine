@@ -36,17 +36,17 @@ describe "Invoices API" do
 
     invoice = JSON.parse(response.body, symbolize_names: true)
 
-    expect(invoice).to have_key(:id)
-    expect(invoice[:id]).to be_an(Integer)
+    expect(invoice[:data][:attributes]).to have_key(:id)
+    expect(invoice[:data][:attributes][:id]).to be_an(Integer)
 
-    expect(invoice).to have_key(:customer_id)
-    expect(invoice[:customer_id]).to be_a(Integer)
+    expect(invoice[:data][:attributes]).to have_key(:customer_id)
+    expect(invoice[:data][:attributes][:customer_id]).to be_a(Integer)
 
-    expect(invoice).to have_key(:merchant_id)
-    expect(invoice[:merchant_id]).to be_a(Integer)
+    expect(invoice[:data][:attributes]).to have_key(:merchant_id)
+    expect(invoice[:data][:attributes][:merchant_id]).to be_a(Integer)
 
-    expect(invoice).to have_key(:status)
-    expect(invoice[:status]).to be_a(String)
+    expect(invoice[:data][:attributes]).to have_key(:status)
+    expect(invoice[:data][:attributes][:status]).to be_a(String)
   end
 
   it "can create a new invoice" do
