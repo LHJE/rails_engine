@@ -110,7 +110,7 @@ describe "Items API" do
 
     id = create(:item).id
 
-    get "/api/v1/items/#{id}/merchant"
+    get "/api/v1/items/#{id}/merchants"
 
     expect(response).to be_successful
 
