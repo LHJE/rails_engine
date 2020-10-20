@@ -36,17 +36,17 @@ describe "Transactions API" do
 
     transaction = JSON.parse(response.body, symbolize_names: true)
 
-    expect(transaction).to have_key(:id)
-    expect(transaction[:id]).to eq(id)
+    expect(transaction[:data][:attributes]).to have_key(:id)
+    expect(transaction[:data][:attributes][:id]).to eq(id)
 
-    expect(transaction).to have_key(:credit_card_number)
-    expect(transaction[:credit_card_number]).to be_a(Integer)
+    expect(transaction[:data][:attributes]).to have_key(:credit_card_number)
+    expect(transaction[:data][:attributes][:credit_card_number]).to be_a(Integer)
 
-    expect(transaction).to have_key(:credit_card_expiration_date)
-    expect(transaction[:credit_card_expiration_date]).to eq(nil)
+    expect(transaction[:data][:attributes]).to have_key(:credit_card_expiration_date)
+    expect(transaction[:data][:attributes][:credit_card_expiration_date]).to eq(nil)
 
-    expect(transaction).to have_key(:result)
-    expect(transaction[:result]).to be_a(String)
+    expect(transaction[:data][:attributes]).to have_key(:result)
+    expect(transaction[:data][:attributes][:result]).to be_a(String)
   end
 
   it "can create a new transaction" do
