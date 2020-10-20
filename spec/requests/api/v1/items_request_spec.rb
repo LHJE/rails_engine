@@ -36,17 +36,17 @@ describe "Items API" do
 
     item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(item).to have_key(:id)
-    expect(item[:id]).to eq(id)
+    expect(item[:data][:attributes]).to have_key(:id)
+    expect(item[:data][:attributes][:id]).to eq(id)
 
-    expect(item).to have_key(:name)
-    expect(item[:name]).to be_a(String)
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to be_a(String)
 
-    expect(item).to have_key(:description)
-    expect(item[:description]).to be_a(String)
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to be_a(String)
 
-    expect(item).to have_key(:merchant_id)
-    expect(item[:merchant_id]).to be_a(Integer)
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to be_a(Integer)
   end
 
   it "can create a new item" do
