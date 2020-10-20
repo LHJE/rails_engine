@@ -80,7 +80,7 @@ describe "Invoices API" do
     expect(invoice.status).to eq("lost")
   end
 
-  xit "can destroy an existing invoice" do
+  it "can destroy an existing invoice" do
     invoice = create(:invoice)
 
     expect(Invoice.count).to eq(1)
@@ -92,7 +92,7 @@ describe "Invoices API" do
     expect{Invoice.find(invoice.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 
-  xit "can destroy an existing invoice" do
+  it "can destroy an existing invoice" do
     invoice = create(:invoice)
 
     expect{ delete "/api/v1/invoices/#{invoice.id}" }.to change(Invoice, :count).by(-1)
