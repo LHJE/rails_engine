@@ -93,6 +93,8 @@ describe "Merchants API" do
 
     get "/api/v1/merchants/#{id}/items"
 
+    expect(response).to be_successful
+
     items = JSON.parse(response.body, symbolize_names: true)
 
     items[:data].each do |item|
