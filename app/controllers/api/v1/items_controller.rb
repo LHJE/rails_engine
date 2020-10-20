@@ -18,7 +18,7 @@ module Api
       end
 
       def destroy
-        render json: ItemSerializer.new(Item.delete(params[:id]))
+        render json: Item.delete(params[:id])
       end
 
       def merchant
