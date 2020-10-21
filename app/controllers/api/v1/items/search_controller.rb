@@ -15,6 +15,18 @@ module Api
             render json: ItemSerializer.new(Item.where("merchant_id like ?", "%#{params[:merchant_id]}%"))
           end
         end
+
+        def index
+          if params.keys.include?("name")
+            render json: ItemSerializer.new(Item.where("name like ?", "%#{params[:name]}%"))
+          elsif params.keys.include?("description")
+            render json: ItemSerializer.new(Item.where("description like ?", "%#{params[:description]}%"))
+          elsif params.keys.include?("unit_price")
+            render json: ItemSerializer.new(Item.where("unit_price like ?", "%#{params[:unit_price]}%"))
+          else
+            render json: ItemSerializer.new(Item.where("merchant_id like ?", "%#{params[:merchant_id]}%"))
+          end
+        end
       end
     end
   end
