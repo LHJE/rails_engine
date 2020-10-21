@@ -18,7 +18,7 @@ module Api
       end
 
       def destroy
-        render json: Merchant.delete(params[:id])
+        Merchant.delete(params[:id])
       end
 
       def items
@@ -28,7 +28,7 @@ module Api
       private
 
       def merchant_params
-        params.require(:merchant).permit(:name)
+        params.permit(:name)
       end
     end
   end
