@@ -9,6 +9,10 @@ module Api
             render json: MerchantSerializer.new(Merchant.where("name like ?", "%#{params[:name]}%"))
           end
         end
+
+        def index
+          render json: MerchantSerializer.new(Merchant.where("name like ?", "%#{params[:name]}%"))
+        end
       end
     end
   end
