@@ -150,7 +150,7 @@ describe "Invoices API" do
     expect(invoice[:data][0][:attributes]).to have_key(:status)
     expect(invoice[:data][0][:attributes][:status]).to eq(Invoice.first.status)
   end
-  
+
   it "can find a single record that matches an merchant_id" do
     create_list(:invoice, 3)
     get '/api/v1/invoices'
@@ -177,4 +177,28 @@ describe "Invoices API" do
   end
 
 
+  it "can find a single record that matches a status" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "status"
+    value = Invoice.first.status
+
+    get "/api/v1/invoices/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:id)
+    expect(invoice[:data][0][:attributes][:id]).to eq(Invoice.first.id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:customer)
+    expect(invoice[:data][0][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:merchant_id)
+    expect(invoice[:data][0][:attributes][:merchant_id]).to eq(Invoice.first.merchant_id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:status)
+    expect(invoice[:data][0][:attributes][:status]).to eq(Invoice.first.status)
+  end
 end
