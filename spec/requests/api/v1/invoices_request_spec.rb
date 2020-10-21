@@ -183,6 +183,87 @@ describe "Invoices API" do
     attribute = "status"
     value = Invoice.first.status
 
+    get "/api/v1/invoices/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body, symbolize_names: true)
+
+    invoices[:data].each do |invoice|
+      expect(invoice[:attributes]).to have_key(:id)
+      expect(invoice[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:customer_id)
+      expect(invoice[:attributes][:customer_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:merchant_id)
+      expect(invoice[:attributes][:merchant_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:status)
+      expect(invoice[:attributes][:status]).to be_a(String)
+    end
+  end
+
+  it "can find a multiple records that match an customer_id" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "customer_id"
+    value = Invoice.first.customer_id
+
+    get "/api/v1/invoices/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body, symbolize_names: true)
+
+    invoices[:data].each do |invoice|
+      expect(invoice[:attributes]).to have_key(:id)
+      expect(invoice[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:customer_id)
+      expect(invoice[:attributes][:customer_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:merchant_id)
+      expect(invoice[:attributes][:merchant_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:status)
+      expect(invoice[:attributes][:status]).to be_a(String)
+    end
+  end
+
+  it "can find a multiple records that match an merchant_id" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "merchant_id"
+    value = Invoice.first.merchant_id
+
+    get "/api/v1/invoices/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body, symbolize_names: true)
+
+    invoices[:data].each do |invoice|
+      expect(invoice[:attributes]).to have_key(:id)
+      expect(invoice[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:customer_id)
+      expect(invoice[:attributes][:customer_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:merchant_id)
+      expect(invoice[:attributes][:merchant_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:status)
+      expect(invoice[:attributes][:status]).to be_a(String)
+    end
+  end
+
+  it "can find a multiple records that match a status" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "status"
+    value = Invoice.first.status
+
     get "/api/v1/invoices/find?#{attribute}=#{value}"
     expect(response).to be_successful
 
