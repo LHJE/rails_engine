@@ -1,11 +1,17 @@
-class Api::V1::Customers::SearchController < ApplicationController
-  def show
-    if params.keys.include?("id")
-      render json: CustomerSerializer.new(Customer.find(params[:id]))
-    elsif params.keys.include?("first_name")
-      require "pry"; binding.pry
-    else
-      require "pry"; binding.pry
+module Api
+  module V1
+    module Customers
+      class SearchController < ApplicationController
+        def show
+          if params.keys.include?("id")
+            render json: CustomerSerializer.new(Customer.find(params[:id]))
+          elsif params.keys.include?("first_name")
+            render json: CustomerSerializer.new(Customer.where(first_name: params[:first_name]))
+          else
+            require "pry"; binding.pry
+          end
+        end
+      end
     end
   end
 end
