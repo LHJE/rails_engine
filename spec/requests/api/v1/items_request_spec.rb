@@ -122,4 +122,33 @@ describe "Items API" do
     expect(merchant[:data][:attributes]).to have_key(:name)
     expect(merchant[:data][:attributes][:name]).to be_a(String)
   end
+
+  it "can find a single record that matches an id" do
+    create_list(:item, 3)
+    get '/api/v1/items'
+
+    attribute = "id"
+    value = Item.first.id
+
+    get "/api/v1/items/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    item = JSON.parse(response.body, symbolize_names: true)
+
+    expect(item[:data][:attributes]).to have_key(:id)
+    expect(item[:data][:attributes][:id]).to eq(Item.first.id)
+
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to eq(Item.first.name)
+
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to eq(Item.first.description)
+
+    expect(item[:data][:attributes]).to have_key(:unit_price)
+    expect(item[:data][:attributes][:unit_price]).to eq(Item.first.unit_price)
+
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
+  end
+
 end
