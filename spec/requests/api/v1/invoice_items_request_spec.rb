@@ -109,4 +109,33 @@ describe "InvoiceItems API" do
     expect(response).to be_success
     expect{InvoiceItem.find(invoice_item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it "can find a single record that matches an id" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "id"
+    value = InvoiceItem.first.id
+
+    get "/api/v1/invoice_items/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_item = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:id)
+    expect(invoice_item[:data][:attributes][:id]).to eq(InvoiceItem.first.id)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:item_id)
+    expect(invoice_item[:data][:attributes][:item_id]).to eq(InvoiceItem.first.item_id)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:invoice_id)
+    expect(invoice_item[:data][:attributes][:invoice_id]).to eq(InvoiceItem.first.invoice_id)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:quantity)
+    expect(invoice_item[:data][:attributes][:quantity]).to eq(InvoiceItem.first.quantity)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:unit_price)
+    expect(invoice_item[:data][:attributes][:unit_price]).to eq(InvoiceItem.first.unit_price)
+  end
+
 end
