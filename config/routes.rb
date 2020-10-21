@@ -7,12 +7,12 @@ Rails.application.routes.draw do
         get '/find', to: 'search#show'
       end
       resources :customers
-      resources :merchants
-      get "merchants/:id/items", to: 'merchants#items'
+      resources :invoice_items
+      resources :invoices
       resources :items
       get "items/:id/merchants", to: 'items#merchant'
-      resources :invoices
-      resources :invoice_items
+      resources :merchants
+      get "merchants/:id/items", to: 'merchants#items'
       resources :transactions
     end
   end
