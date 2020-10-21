@@ -11,6 +11,14 @@ module Api
             render json: CustomerSerializer.new(Customer.where("last_name like ?", "%#{params[:last_name]}%"))
           end
         end
+
+        def index
+          if params.keys.include?("first_name")
+            render json: CustomerSerializer.new(Customer.where("first_name like ?", "%#{params[:first_name]}%"))
+          else
+            render json: CustomerSerializer.new(Customer.where("last_name like ?", "%#{params[:last_name]}%"))
+          end
+        end
       end
     end
   end
