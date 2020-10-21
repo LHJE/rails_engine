@@ -109,4 +109,265 @@ describe "InvoiceItems API" do
     expect(response).to be_success
     expect{InvoiceItem.find(invoice_item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it "can find a single record that matches an id" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "id"
+    value = InvoiceItem.first.id
+
+    get "/api/v1/invoice_items/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_item = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:id)
+    expect(invoice_item[:data][:attributes][:id]).to eq(InvoiceItem.first.id)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:item_id)
+    expect(invoice_item[:data][:attributes][:item_id]).to eq(InvoiceItem.first.item_id)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:invoice_id)
+    expect(invoice_item[:data][:attributes][:invoice_id]).to eq(InvoiceItem.first.invoice_id)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:quantity)
+    expect(invoice_item[:data][:attributes][:quantity]).to eq(InvoiceItem.first.quantity)
+
+    expect(invoice_item[:data][:attributes]).to have_key(:unit_price)
+    expect(invoice_item[:data][:attributes][:unit_price]).to eq(InvoiceItem.first.unit_price)
+  end
+
+  it "can find a single record that matches an item_id" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "item_id"
+    value = InvoiceItem.first.item_id
+
+    get "/api/v1/invoice_items/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_item = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:id)
+    expect(invoice_item[:data][0][:attributes][:id]).to eq(InvoiceItem.first.id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:item_id)
+    expect(invoice_item[:data][0][:attributes][:item_id]).to eq(InvoiceItem.first.item_id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:invoice_id)
+    expect(invoice_item[:data][0][:attributes][:invoice_id]).to eq(InvoiceItem.first.invoice_id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:quantity)
+    expect(invoice_item[:data][0][:attributes][:quantity]).to eq(InvoiceItem.first.quantity)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:unit_price)
+    expect(invoice_item[:data][0][:attributes][:unit_price]).to eq(InvoiceItem.first.unit_price)
+  end
+
+  it "can find a single record that matches an invoice_id" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "invoice_id"
+    value = InvoiceItem.first.invoice_id
+
+    get "/api/v1/invoice_items/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_item = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:id)
+    expect(invoice_item[:data][0][:attributes][:id]).to eq(InvoiceItem.first.id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:item_id)
+    expect(invoice_item[:data][0][:attributes][:item_id]).to eq(InvoiceItem.first.item_id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:invoice_id)
+    expect(invoice_item[:data][0][:attributes][:invoice_id]).to eq(InvoiceItem.first.invoice_id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:quantity)
+    expect(invoice_item[:data][0][:attributes][:quantity]).to eq(InvoiceItem.first.quantity)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:unit_price)
+    expect(invoice_item[:data][0][:attributes][:unit_price]).to eq(InvoiceItem.first.unit_price)
+  end
+
+  it "can find a single record that matches a quantity" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "quantity"
+    value = InvoiceItem.first.quantity
+
+    get "/api/v1/invoice_items/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_item = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:id)
+    expect(invoice_item[:data][0][:attributes][:id]).to eq(InvoiceItem.first.id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:item_id)
+    expect(invoice_item[:data][0][:attributes][:item_id]).to eq(InvoiceItem.first.item_id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:invoice_id)
+    expect(invoice_item[:data][0][:attributes][:invoice_id]).to eq(InvoiceItem.first.invoice_id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:quantity)
+    expect(invoice_item[:data][0][:attributes][:quantity]).to eq(InvoiceItem.first.quantity)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:unit_price)
+    expect(invoice_item[:data][0][:attributes][:unit_price]).to eq(InvoiceItem.first.unit_price)
+  end
+
+  it "can find a single record that matches a partial unit_price" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "unit_price"
+    value = InvoiceItem.first.unit_price
+
+    get "/api/v1/invoice_items/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_item = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:id)
+    expect(invoice_item[:data][0][:attributes][:id]).to eq(InvoiceItem.first.id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:item_id)
+    expect(invoice_item[:data][0][:attributes][:item_id]).to eq(InvoiceItem.first.item_id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:invoice_id)
+    expect(invoice_item[:data][0][:attributes][:invoice_id]).to eq(InvoiceItem.first.invoice_id)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:quantity)
+    expect(invoice_item[:data][0][:attributes][:quantity]).to eq(InvoiceItem.first.quantity)
+
+    expect(invoice_item[:data][0][:attributes]).to have_key(:unit_price)
+    expect(invoice_item[:data][0][:attributes][:unit_price]).to eq(InvoiceItem.first.unit_price)
+  end
+
+  it "can find multiple records that match an item_id" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "item_id"
+    value = InvoiceItem.first.item_id
+
+    get "/api/v1/invoice_items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_items = JSON.parse(response.body, symbolize_names: true)
+
+    invoice_items[:data].each do |invoice_item|
+      expect(invoice_item[:attributes]).to have_key(:id)
+      expect(invoice_item[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:item_id)
+      expect(invoice_item[:attributes][:item_id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:invoice_id)
+      expect(invoice_item[:attributes][:invoice_id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:quantity)
+      expect(invoice_item[:attributes][:quantity]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:unit_price)
+      expect(invoice_item[:attributes][:unit_price]).to be_a(Integer)
+    end
+  end
+
+  it "can find multiple records that match an invoice_id" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "invoice_id"
+    value = InvoiceItem.first.invoice_id
+
+    get "/api/v1/invoice_items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_items = JSON.parse(response.body, symbolize_names: true)
+
+    invoice_items[:data].each do |invoice_item|
+      expect(invoice_item[:attributes]).to have_key(:id)
+      expect(invoice_item[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:item_id)
+      expect(invoice_item[:attributes][:item_id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:invoice_id)
+      expect(invoice_item[:attributes][:invoice_id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:quantity)
+      expect(invoice_item[:attributes][:quantity]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:unit_price)
+      expect(invoice_item[:attributes][:unit_price]).to be_a(Integer)
+    end
+  end
+
+  it "can find multiple records that match a quantity" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "quantity"
+    value = InvoiceItem.first.quantity
+
+    get "/api/v1/invoice_items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_items = JSON.parse(response.body, symbolize_names: true)
+
+    invoice_items[:data].each do |invoice_item|
+      expect(invoice_item[:attributes]).to have_key(:id)
+      expect(invoice_item[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:item_id)
+      expect(invoice_item[:attributes][:item_id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:invoice_id)
+      expect(invoice_item[:attributes][:invoice_id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:quantity)
+      expect(invoice_item[:attributes][:quantity]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:unit_price)
+      expect(invoice_item[:attributes][:unit_price]).to be_a(Integer)
+    end
+  end
+
+  it "can find multiple records that match a partial unit_price" do
+    create_list(:invoice_item, 3)
+    get '/api/v1/invoice_items'
+
+    attribute = "unit_price"
+    value = InvoiceItem.first.unit_price
+
+    get "/api/v1/invoice_items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice_items = JSON.parse(response.body, symbolize_names: true)
+
+    invoice_items[:data].each do |invoice_item|
+      expect(invoice_item[:attributes]).to have_key(:id)
+      expect(invoice_item[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:item_id)
+      expect(invoice_item[:attributes][:item_id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:invoice_id)
+      expect(invoice_item[:attributes][:invoice_id]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:quantity)
+      expect(invoice_item[:attributes][:quantity]).to be_a(Integer)
+
+      expect(invoice_item[:attributes]).to have_key(:unit_price)
+      expect(invoice_item[:attributes][:unit_price]).to be_a(Integer)
+    end
+  end
+
 end

@@ -111,4 +111,103 @@ describe "Merchants API" do
       expect(item[:attributes][:merchant_id]).to be_a(Integer)
     end
   end
+
+  it "can find a single record that matches an id" do
+    create_list(:merchant, 3)
+    get '/api/v1/merchants'
+
+    attribute = "id"
+    value = Merchant.first.id
+
+    get "/api/v1/merchants/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    merchant = JSON.parse(response.body, symbolize_names: true)
+
+    expect(merchant[:data][:attributes]).to have_key(:id)
+    expect(merchant[:data][:attributes][:id]).to eq(Merchant.first.id)
+
+    expect(merchant[:data][:attributes]).to have_key(:name)
+    expect(merchant[:data][:attributes][:name]).to eq(Merchant.first.name)
+  end
+
+  it "can find a single record that matches a name" do
+    create_list(:merchant, 3)
+    get '/api/v1/merchants'
+
+    attribute = "name"
+    value = Merchant.first.name
+
+    get "/api/v1/merchants/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    merchant = JSON.parse(response.body, symbolize_names: true)
+
+    expect(merchant[:data][0][:attributes]).to have_key(:id)
+    expect(merchant[:data][0][:attributes][:id]).to eq(Merchant.first.id)
+
+    expect(merchant[:data][0][:attributes]).to have_key(:name)
+    expect(merchant[:data][0][:attributes][:name]).to eq(Merchant.first.name)
+  end
+
+  it "can find a single record that matches a partial name" do
+    create_list(:merchant, 3)
+    get '/api/v1/merchants'
+
+    attribute = "last_name"
+    value = Merchant.first.name[0..3]
+
+    get "/api/v1/merchants/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    merchant = JSON.parse(response.body, symbolize_names: true)
+
+    expect(merchant[:data][0][:attributes]).to have_key(:id)
+    expect(merchant[:data][0][:attributes][:id]).to eq(Merchant.first.id)
+
+    expect(merchant[:data][0][:attributes]).to have_key(:name)
+    expect(merchant[:data][0][:attributes][:name]).to eq(Merchant.first.name)
+  end
+
+  it "can find a multiple records that match a name" do
+    create_list(:merchant, 3)
+    get '/api/v1/merchants'
+
+    attribute = "name"
+    value = Merchant.first.name
+
+    get "/api/v1/merchants/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    merchants = JSON.parse(response.body, symbolize_names: true)
+
+    merchants[:data].each do |merchant|
+      expect(merchant[:attributes]).to have_key(:id)
+      expect(merchant[:attributes][:id]).to be_a(Integer)
+
+      expect(merchant[:attributes]).to have_key(:name)
+      expect(merchant[:attributes][:name]).to be_a(String)
+    end
+  end
+
+  it "can find a multiple records that match a partial name" do
+    create_list(:merchant, 3)
+    get '/api/v1/merchants'
+
+    attribute = "last_name"
+    value = Merchant.first.name[0..3]
+
+    get "/api/v1/merchants/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    merchants = JSON.parse(response.body, symbolize_names: true)
+
+    merchants[:data].each do |merchant|
+      expect(merchant[:attributes]).to have_key(:id)
+      expect(merchant[:attributes][:id]).to be_a(Integer)
+
+      expect(merchant[:attributes]).to have_key(:name)
+      expect(merchant[:attributes][:name]).to be_a(String)
+    end
+  end
 end

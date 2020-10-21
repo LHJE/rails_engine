@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :invoice_item do
     item
     invoice
-    quantity { Faker::Number.decimal_part(digits: 2) }
-    unit_price { Faker::Number.decimal(l_digits: 2) }
+    quantity { 12 }
+    unit_price { 12345 }
   end
 end

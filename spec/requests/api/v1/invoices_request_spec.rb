@@ -100,4 +100,185 @@ describe "Invoices API" do
     expect(response).to be_success
     expect{Invoice.find(invoice.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it "can find a single record that matches an id" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "id"
+    value = Invoice.first.id
+
+    get "/api/v1/invoices/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice[:data][:attributes]).to have_key(:id)
+    expect(invoice[:data][:attributes][:id]).to eq(Invoice.first.id)
+
+    expect(invoice[:data][:attributes]).to have_key(:customer_id)
+    expect(invoice[:data][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
+
+    expect(invoice[:data][:attributes]).to have_key(:merchant_id)
+    expect(invoice[:data][:attributes][:merchant_id]).to eq(Invoice.first.merchant_id)
+
+    expect(invoice[:data][:attributes]).to have_key(:status)
+    expect(invoice[:data][:attributes][:status]).to eq(Invoice.first.status)
+  end
+
+  it "can find a single record that matches an customer_id" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "customer_id"
+    value = Invoice.first.customer_id
+
+    get "/api/v1/invoices/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:id)
+    expect(invoice[:data][0][:attributes][:id]).to eq(Invoice.first.id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:customer_id)
+    expect(invoice[:data][0][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:merchant_id)
+    expect(invoice[:data][0][:attributes][:merchant_id]).to eq(Invoice.first.merchant_id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:status)
+    expect(invoice[:data][0][:attributes][:status]).to eq(Invoice.first.status)
+  end
+
+  it "can find a single record that matches an merchant_id" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "merchant_id"
+    value = Invoice.first.merchant_id
+
+    get "/api/v1/invoices/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:id)
+    expect(invoice[:data][0][:attributes][:id]).to eq(Invoice.first.id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:customer_id)
+    expect(invoice[:data][0][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:merchant_id)
+    expect(invoice[:data][0][:attributes][:merchant_id]).to eq(Invoice.first.merchant_id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:status)
+    expect(invoice[:data][0][:attributes][:status]).to eq(Invoice.first.status)
+  end
+
+  it "can find a single record that matches a status" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "status"
+    value = Invoice.first.status
+
+    get "/api/v1/invoices/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body, symbolize_names: true)
+
+    invoices[:data].each do |invoice|
+      expect(invoice[:attributes]).to have_key(:id)
+      expect(invoice[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:customer_id)
+      expect(invoice[:attributes][:customer_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:merchant_id)
+      expect(invoice[:attributes][:merchant_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:status)
+      expect(invoice[:attributes][:status]).to be_a(String)
+    end
+  end
+
+  it "can find a multiple records that match an customer_id" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "customer_id"
+    value = Invoice.first.customer_id
+
+    get "/api/v1/invoices/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body, symbolize_names: true)
+
+    invoices[:data].each do |invoice|
+      expect(invoice[:attributes]).to have_key(:id)
+      expect(invoice[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:customer_id)
+      expect(invoice[:attributes][:customer_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:merchant_id)
+      expect(invoice[:attributes][:merchant_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:status)
+      expect(invoice[:attributes][:status]).to be_a(String)
+    end
+  end
+
+  it "can find a multiple records that match an merchant_id" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "merchant_id"
+    value = Invoice.first.merchant_id
+
+    get "/api/v1/invoices/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoices = JSON.parse(response.body, symbolize_names: true)
+
+    invoices[:data].each do |invoice|
+      expect(invoice[:attributes]).to have_key(:id)
+      expect(invoice[:attributes][:id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:customer_id)
+      expect(invoice[:attributes][:customer_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:merchant_id)
+      expect(invoice[:attributes][:merchant_id]).to be_a(Integer)
+
+      expect(invoice[:attributes]).to have_key(:status)
+      expect(invoice[:attributes][:status]).to be_a(String)
+    end
+  end
+
+  it "can find a multiple records that match a status" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices'
+
+    attribute = "status"
+    value = Invoice.first.status
+
+    get "/api/v1/invoices/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    invoice = JSON.parse(response.body, symbolize_names: true)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:id)
+    expect(invoice[:data][0][:attributes][:id]).to eq(Invoice.first.id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:customer_id)
+    expect(invoice[:data][0][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:merchant_id)
+    expect(invoice[:data][0][:attributes][:merchant_id]).to eq(Invoice.first.merchant_id)
+
+    expect(invoice[:data][0][:attributes]).to have_key(:status)
+    expect(invoice[:data][0][:attributes][:status]).to eq(Invoice.first.status)
+  end
 end

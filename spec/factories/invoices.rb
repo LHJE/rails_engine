@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :invoice do
     customer
     merchant
-    status { Faker::Boolean.boolean }
+    status { "shipped" }
   end
 end
