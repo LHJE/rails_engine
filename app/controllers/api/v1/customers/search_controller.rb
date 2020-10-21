@@ -8,7 +8,7 @@ module Api
           elsif params.keys.include?("first_name")
             render json: CustomerSerializer.new(Customer.where(first_name: params[:first_name]))
           else
-            require "pry"; binding.pry
+            render json: CustomerSerializer.new(Customer.where(last_name: params[:last_name]))
           end
         end
       end
