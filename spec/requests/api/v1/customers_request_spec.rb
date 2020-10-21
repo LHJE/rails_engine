@@ -91,4 +91,26 @@ describe "Customers API" do
     expect(response).to be_success
     expect{Customer.find(customer.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it "can find a single record that matches an id" do
+    create_list(:customer, 3)
+    get '/api/v1/customers'
+
+    attribute = "id"
+    value = Customer.first.id
+
+    get "/api/v1/customers/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    customer = JSON.parse(response.body, symbolize_names: true)
+
+    expect(customer[:data][:attributes]).to have_key(:id)
+    expect(customer[:data][:attributes][:id]).to eq(Customer.first.id)
+
+    expect(customer[:data][:attributes]).to have_key(:first_name)
+    expect(customer[:data][:attributes][:first_name]).to eq(Customer.first.first_name)
+
+    expect(customer[:data][:attributes]).to have_key(:last_name)
+    expect(customer[:data][:attributes][:last_name]).to eq(Customer.first.last_name)
+  end
 end
