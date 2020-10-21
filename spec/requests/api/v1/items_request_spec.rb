@@ -105,13 +105,9 @@ RSpec.describe "Items API" do
   end
 
   it "can get merchant specific to the item " do
-    create_list(:merchant, 3)
-
-    get '/api/v1/merchants'
-
     id = create(:item).id
 
-    get "/api/v1/items/#{id}/merchants"
+    get "/api/v1/items/#{id}/merchant"
 
     expect(response).to be_successful
 
