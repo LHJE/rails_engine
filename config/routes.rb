@@ -25,6 +25,9 @@ Rails.application.routes.draw do
       end
       resources :merchants
       get "merchants/:id/items", to: 'merchants#items'
+      namespace :transactions do
+        get '/find', to: 'search#show'
+      end
       resources :transactions
     end
   end
