@@ -13,6 +13,14 @@ module Api
             render json: TransactionSerializer.new(Transaction.where("result like ?", "%#{params[:result]}%"))
           end
         end
+
+        def index
+          if params.keys.include?("credit_card_number")
+            render json: TransactionSerializer.new(Transaction.where("credit_card_number like ?", "%#{params[:credit_card_number]}%"))
+          else
+            render json: TransactionSerializer.new(Transaction.where("result like ?", "%#{params[:result]}%"))
+          end
+        end
       end
     end
   end
