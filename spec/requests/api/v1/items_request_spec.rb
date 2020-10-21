@@ -184,7 +184,7 @@ describe "Items API" do
     get '/api/v1/items'
 
     attribute = "name"
-    value = Item.first.name[0..3]
+    value = Item.first.name[0..2]
 
     get "/api/v1/items/find?#{attribute}=#{value}"
     expect(response).to be_successful
