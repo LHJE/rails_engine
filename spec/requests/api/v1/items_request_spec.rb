@@ -179,7 +179,7 @@ describe "Items API" do
     expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
-  it "can find a single record that matches an name" do
+  it "can find a single record that matches a partial name" do
     create_list(:item, 3)
     get '/api/v1/items'
 
@@ -207,7 +207,7 @@ describe "Items API" do
     expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
-  it "can find a single record that matches an description" do
+  it "can find a single record that matches a description" do
     create_list(:item, 3)
     get '/api/v1/items'
 
@@ -235,7 +235,7 @@ describe "Items API" do
     expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
-  it "can find a single record that matches an description" do
+  it "can find a single record that matches a partial description" do
     create_list(:item, 3)
     get '/api/v1/items'
 
@@ -263,7 +263,7 @@ describe "Items API" do
     expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
-  it "can find a single record that matches a partial unit_price" do
+  it "can find a single record that matches a unit_price" do
     create_list(:item, 3)
     get '/api/v1/items'
 
@@ -317,5 +317,185 @@ describe "Items API" do
 
     expect(item[:data][0][:attributes]).to have_key(:merchant_id)
     expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
+  end
+
+  it "can find a multiple records that match an name" do
+    create_list(:item, 3)
+    get '/api/v1/items'
+
+    attribute = "name"
+    value = Item.first.name
+
+    get "/api/v1/items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body, symbolize_names: true)
+
+    items[:data].each do |item|
+      expect(item[:attributes]).to have_key(:id)
+      expect(item[:attributes][:id]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:name)
+      expect(item[:attributes][:name]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:description)
+      expect(item[:attributes][:description]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:unit_price)
+      expect(item[:attributes][:unit_price]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:merchant_id)
+      expect(item[:attributes][:merchant_id]).to be_a(Integer)
+    end
+  end
+
+  it "can find a multiple records that match a partial name" do
+    create_list(:item, 3)
+    get '/api/v1/items'
+
+    attribute = "name"
+    value = Item.first.name[0..3]
+
+    get "/api/v1/items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body, symbolize_names: true)
+
+    items[:data].each do |item|
+      expect(item[:attributes]).to have_key(:id)
+      expect(item[:attributes][:id]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:name)
+      expect(item[:attributes][:name]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:description)
+      expect(item[:attributes][:description]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:unit_price)
+      expect(item[:attributes][:unit_price]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:merchant_id)
+      expect(item[:attributes][:merchant_id]).to be_a(Integer)
+    end
+  end
+
+  it "can find a multiple records that match a description" do
+    create_list(:item, 3)
+    get '/api/v1/items'
+
+    attribute = "description"
+    value = Item.first.description
+
+    get "/api/v1/items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body, symbolize_names: true)
+
+    items[:data].each do |item|
+      expect(item[:attributes]).to have_key(:id)
+      expect(item[:attributes][:id]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:name)
+      expect(item[:attributes][:name]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:description)
+      expect(item[:attributes][:description]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:unit_price)
+      expect(item[:attributes][:unit_price]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:merchant_id)
+      expect(item[:attributes][:merchant_id]).to be_a(Integer)
+    end
+  end
+
+  it "can find a multiple records that match a partial description" do
+    create_list(:item, 3)
+    get '/api/v1/items'
+
+    attribute = "description"
+    value = Item.first.description[0..6]
+
+    get "/api/v1/items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body, symbolize_names: true)
+
+    items[:data].each do |item|
+      expect(item[:attributes]).to have_key(:id)
+      expect(item[:attributes][:id]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:name)
+      expect(item[:attributes][:name]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:description)
+      expect(item[:attributes][:description]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:unit_price)
+      expect(item[:attributes][:unit_price]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:merchant_id)
+      expect(item[:attributes][:merchant_id]).to be_a(Integer)
+    end
+  end
+
+  it "can find a multiple records that match a unit_price" do
+    create_list(:item, 3)
+    get '/api/v1/items'
+
+    attribute = "unit_price"
+    value = Item.first.unit_price
+
+    get "/api/v1/items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body, symbolize_names: true)
+
+    items[:data].each do |item|
+      expect(item[:attributes]).to have_key(:id)
+      expect(item[:attributes][:id]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:name)
+      expect(item[:attributes][:name]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:description)
+      expect(item[:attributes][:description]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:unit_price)
+      expect(item[:attributes][:unit_price]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:merchant_id)
+      expect(item[:attributes][:merchant_id]).to be_a(Integer)
+    end
+  end
+
+  it "can find a multiple records that match a merchant_id" do
+    create_list(:item, 3)
+    get '/api/v1/items'
+
+    attribute = "merchant_id"
+    value = Item.first.merchant_id
+
+    get "/api/v1/items/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    items = JSON.parse(response.body, symbolize_names: true)
+
+    items[:data].each do |item|
+      expect(item[:attributes]).to have_key(:id)
+      expect(item[:attributes][:id]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:name)
+      expect(item[:attributes][:name]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:description)
+      expect(item[:attributes][:description]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:unit_price)
+      expect(item[:attributes][:unit_price]).to be_a(Integer)
+
+      expect(item[:attributes]).to have_key(:merchant_id)
+      expect(item[:attributes][:merchant_id]).to be_a(Integer)
+    end
   end
 end
