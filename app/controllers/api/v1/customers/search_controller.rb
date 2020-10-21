@@ -6,7 +6,7 @@ module Api
           if params.keys.include?("id")
             render json: CustomerSerializer.new(Customer.find(params[:id]))
           elsif params.keys.include?("first_name")
-            render json: CustomerSerializer.new(Customer.where(first_name: params[:first_name]))
+            render json: CustomerSerializer.new(Customer.where("first_name like ?", "%#{params[:first_name]}%"))
           else
             render json: CustomerSerializer.new(Customer.where(last_name: params[:last_name]))
           end
