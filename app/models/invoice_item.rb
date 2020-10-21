@@ -3,6 +3,7 @@ require 'csv'
 class InvoiceItem < ApplicationRecord
   belongs_to :item, optional: true
   belongs_to :invoice, optional: true
+  has_many :transactions, :through => :invoice_items, :source => :invoice
 
   validates :item_id,
             :invoice_id,
