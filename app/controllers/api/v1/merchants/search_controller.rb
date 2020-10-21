@@ -6,7 +6,7 @@ module Api
           if params.keys.include?("id")
             render json: MerchantSerializer.new(Merchant.find(params[:id]))
           else
-            render json: MerchantSerializer.new(Merchant.where("name like ?", "%#{params[:name].downcase}%"))
+            render json: MerchantSerializer.new(Merchant.where("name like ?", "%#{params[:name].downcase}%").first)
           end
         end
 
