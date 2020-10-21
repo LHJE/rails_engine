@@ -116,14 +116,14 @@ describe "Invoices API" do
     expect(invoice[:data][:attributes]).to have_key(:id)
     expect(invoice[:data][:attributes][:id]).to eq(Invoice.first.id)
 
-    expect(invoice[:data][:attributes]).to have_key(:item_id)
-    expect(invoice[:data][:attributes][:item_id]).to eq(Invoice.first.item_id)
+    expect(invoice[:data][:attributes]).to have_key(:customer_id)
+    expect(invoice[:data][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
 
-    expect(invoice[:data][:attributes]).to have_key(:invoice_id)
-    expect(invoice[:data][:attributes][:invoice_id]).to eq(Invoice.first.invoice_id)
+    expect(invoice[:data][:attributes]).to have_key(:merchant_id)
+    expect(invoice[:data][:attributes][:merchant_id]).to eq(Invoice.first.merchant_id)
 
-    expect(invoice[:data][:attributes]).to have_key(:unit_price)
-    expect(invoice[:data][:attributes][:unit_price]).to eq(Invoice.first.unit_price)
+    expect(invoice[:data][:attributes]).to have_key(:status)
+    expect(invoice[:data][:attributes][:status]).to eq(Invoice.first.status)
   end
 
   it "can find a single record that matches an customer_id" do
@@ -141,7 +141,7 @@ describe "Invoices API" do
     expect(invoice[:data][0][:attributes]).to have_key(:id)
     expect(invoice[:data][0][:attributes][:id]).to eq(Invoice.first.id)
 
-    expect(invoice[:data][0][:attributes]).to have_key(:customer)
+    expect(invoice[:data][0][:attributes]).to have_key(:customer_id)
     expect(invoice[:data][0][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
 
     expect(invoice[:data][0][:attributes]).to have_key(:merchant_id)
@@ -166,7 +166,7 @@ describe "Invoices API" do
     expect(invoice[:data][0][:attributes]).to have_key(:id)
     expect(invoice[:data][0][:attributes][:id]).to eq(Invoice.first.id)
 
-    expect(invoice[:data][0][:attributes]).to have_key(:customer)
+    expect(invoice[:data][0][:attributes]).to have_key(:customer_id)
     expect(invoice[:data][0][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
 
     expect(invoice[:data][0][:attributes]).to have_key(:merchant_id)
@@ -175,7 +175,6 @@ describe "Invoices API" do
     expect(invoice[:data][0][:attributes]).to have_key(:status)
     expect(invoice[:data][0][:attributes][:status]).to eq(Invoice.first.status)
   end
-
 
   it "can find a single record that matches a status" do
     create_list(:invoice, 3)
@@ -192,7 +191,7 @@ describe "Invoices API" do
     expect(invoice[:data][0][:attributes]).to have_key(:id)
     expect(invoice[:data][0][:attributes][:id]).to eq(Invoice.first.id)
 
-    expect(invoice[:data][0][:attributes]).to have_key(:customer)
+    expect(invoice[:data][0][:attributes]).to have_key(:customer_id)
     expect(invoice[:data][0][:attributes][:customer_id]).to eq(Invoice.first.customer_id)
 
     expect(invoice[:data][0][:attributes]).to have_key(:merchant_id)
