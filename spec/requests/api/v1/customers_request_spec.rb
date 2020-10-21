@@ -135,4 +135,26 @@ describe "Customers API" do
     expect(customer[:data][0][:attributes]).to have_key(:last_name)
     expect(customer[:data][0][:attributes][:last_name]).to eq(Customer.first.last_name)
   end
+
+  it "can find a single record that matches a first name" do
+    create_list(:customer, 3)
+    get '/api/v1/customers'
+
+    attribute = "last_name"
+    value = Customer.first.last_name
+
+    get "/api/v1/customers/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    customer = JSON.parse(response.body, symbolize_names: true)
+
+    expect(customer[:data][0][:attributes]).to have_key(:id)
+    expect(customer[:data][0][:attributes][:id]).to eq(Customer.first.id)
+
+    expect(customer[:data][0][:attributes]).to have_key(:first_name)
+    expect(customer[:data][0][:attributes][:first_name]).to eq(Customer.first.first_name)
+
+    expect(customer[:data][0][:attributes]).to have_key(:last_name)
+    expect(customer[:data][0][:attributes][:last_name]).to eq(Customer.first.last_name)
+  end
 end
