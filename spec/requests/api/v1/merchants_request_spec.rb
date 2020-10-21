@@ -131,4 +131,24 @@ describe "Merchants API" do
     expect(merchant[:data][:attributes][:name]).to eq(Merchant.first.name)
   end
 
+  it "can find a single record that matches a name" do
+    create_list(:merchant, 3)
+    get '/api/v1/merchants'
+
+    attribute = "name"
+    value = Merchant.first.name
+
+    get "/api/v1/merchants/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    merchant = JSON.parse(response.body, symbolize_names: true)
+
+    expect(merchant[:data][0][:attributes]).to have_key(:id)
+    expect(merchant[:data][0][:attributes][:id]).to eq(Merchant.first.id)
+
+    expect(merchant[:data][0][:attributes]).to have_key(:name)
+    expect(merchant[:data][0][:attributes][:name]).to eq(Merchant.first.name)
+  end
+
+
 end
