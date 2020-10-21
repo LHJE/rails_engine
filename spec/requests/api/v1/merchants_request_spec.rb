@@ -86,10 +86,9 @@ describe "Merchants API" do
   end
 
   it "can get the items specific to this merchant" do
-    create_list(:item, 3)
-    get '/api/v1/items'
+    create_list(:item, 10)
 
-    id = create(:merchant).id
+    id = Merchant.first.id
 
     get "/api/v1/merchants/#{id}/items"
 
@@ -114,7 +113,6 @@ describe "Merchants API" do
 
   it "can find a single record that matches an id" do
     create_list(:merchant, 3)
-    get '/api/v1/merchants'
 
     attribute = "id"
     value = Merchant.first.id
@@ -133,7 +131,6 @@ describe "Merchants API" do
 
   it "can find a single record that matches a name" do
     create_list(:merchant, 3)
-    get '/api/v1/merchants'
 
     attribute = "name"
     value = Merchant.first.name
@@ -152,7 +149,6 @@ describe "Merchants API" do
 
   it "can find a single record that matches a partial name" do
     create_list(:merchant, 3)
-    get '/api/v1/merchants'
 
     attribute = "last_name"
     value = Merchant.first.name[0..3]
@@ -171,7 +167,6 @@ describe "Merchants API" do
 
   it "can find a multiple records that match a name" do
     create_list(:merchant, 3)
-    get '/api/v1/merchants'
 
     attribute = "name"
     value = Merchant.first.name
@@ -192,12 +187,31 @@ describe "Merchants API" do
 
   it "can find a multiple records that match a partial name" do
     create_list(:merchant, 3)
-    get '/api/v1/merchants'
 
     attribute = "last_name"
     value = Merchant.first.name[0..3]
 
     get "/api/v1/merchants/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    merchants = JSON.parse(response.body, symbolize_names: true)
+
+    merchants[:data].each do |merchant|
+      expect(merchant[:attributes]).to have_key(:id)
+      expect(merchant[:attributes][:id]).to be_a(Integer)
+
+      expect(merchant[:attributes]).to have_key(:name)
+      expect(merchant[:attributes][:name]).to be_a(String)
+    end
+  end
+
+  it "can find a a variable number of merchants ranked by total revenue" do
+    create_list(:transaction, 100)
+    create_list(:invoice_item, 100)
+
+    x = 5
+
+    get "/api/v1/merchants/most_revenue?quantity=#{x}"
     expect(response).to be_successful
 
     merchants = JSON.parse(response.body, symbolize_names: true)
