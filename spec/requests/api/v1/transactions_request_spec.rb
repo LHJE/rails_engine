@@ -102,4 +102,30 @@ describe "Transactions API" do
     expect(response).to be_success
     expect{Transaction.find(transaction.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it "can find a single record that matches an id" do
+    create_list(:transaction, 3)
+    get '/api/v1/transactions'
+
+    attribute = "id"
+    value = Transaction.first.id
+
+    get "/api/v1/transactions/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    transaction = JSON.parse(response.body, symbolize_names: true)
+
+    expect(transaction[:data][:attributes]).to have_key(:id)
+    expect(transaction[:data][:attributes][:id]).to eq(Transaction.first.id)
+
+    expect(transaction[:data][:attributes]).to have_key(:invoice_id)
+    expect(transaction[:data][:attributes][:invoice_id]).to eq(Transaction.first.invoice_id)
+
+    expect(transaction[:data][:attributes]).to have_key(:credit_card_number)
+    expect(transaction[:data][:attributes][:credit_card_number]).to eq(Transaction.first.credit_card_number)
+
+    expect(transaction[:data][:attributes]).to have_key(:result)
+    expect(transaction[:data][:attributes][:result]).to eq(Transaction.first.result)
+  end
+
 end
