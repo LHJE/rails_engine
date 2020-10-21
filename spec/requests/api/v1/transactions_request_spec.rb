@@ -152,6 +152,31 @@ describe "Transactions API" do
     expect(transaction[:data][0][:attributes]).to have_key(:result)
     expect(transaction[:data][0][:attributes][:result]).to eq(Transaction.first.result)
   end
+  
+  it "can find a single record that matches an credit_card_number" do
+    create_list(:transaction, 3)
+    get '/api/v1/transactions'
+
+    attribute = "credit_card_number"
+    value = Transaction.first.credit_card_number
+
+    get "/api/v1/transactions/find?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    transaction = JSON.parse(response.body, symbolize_names: true)
+
+    expect(transaction[:data][0][:attributes]).to have_key(:id)
+    expect(transaction[:data][0][:attributes][:id]).to eq(Transaction.first.id)
+
+    expect(transaction[:data][0][:attributes]).to have_key(:invoice_id)
+    expect(transaction[:data][0][:attributes][:invoice_id]).to eq(Transaction.first.invoice_id)
+
+    expect(transaction[:data][0][:attributes]).to have_key(:credit_card_number)
+    expect(transaction[:data][0][:attributes][:credit_card_number]).to eq(Transaction.first.credit_card_number)
+
+    expect(transaction[:data][0][:attributes]).to have_key(:result)
+    expect(transaction[:data][0][:attributes][:result]).to eq(Transaction.first.result)
+  end
 
 
 end
