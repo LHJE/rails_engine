@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Items API" do
+RSpec.describe "Items API" do
   it "sends a list of items" do
     create_list(:item, 3)
 
@@ -50,7 +50,7 @@ describe "Items API" do
   end
 
   it "can create a new item" do
-    item_params = ({
+    body = ({
                     name: 'Socks',
                     description: 'Great socks',
                     unit_price: 234,
@@ -58,7 +58,8 @@ describe "Items API" do
                   })
     headers = {"CONTENT_TYPE" => "application/json"}
 
-    post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
+    post "/api/v1/items", headers: headers, params: JSON.generate(body)
+
     created_item = Item.last
 
     expect(response).to be_successful
