@@ -201,4 +201,99 @@ describe "Customers API" do
     expect(customer[:data][0][:attributes]).to have_key(:last_name)
     expect(customer[:data][0][:attributes][:last_name]).to eq(Customer.first.last_name)
   end
+
+  it "can find multiple records that match a first name" do
+    create_list(:customer, 3)
+    get '/api/v1/customers'
+    attribute = "first_name"
+    value = Customer.first.first_name
+
+    get "/api/v1/customers/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    customers = JSON.parse(response.body, symbolize_names: true)
+
+    customers[:data].each do |customer|
+      expect(customer[:attributes]).to have_key(:id)
+      expect(customer[:attributes][:id]).to be_a(Integer)
+
+      expect(customer[:attributes]).to have_key(:first_name)
+      expect(customer[:attributes][:first_name]).to be_a(String)
+
+      expect(customer[:attributes]).to have_key(:last_name)
+      expect(customer[:attributes][:last_name]).to be_a(String)
+    end
+  end
+
+  it "can find multiple records that match a last name" do
+    create_list(:customer, 3)
+    get '/api/v1/customers'
+
+    attribute = "last_name"
+    value = Customer.first.last_name
+
+    get "/api/v1/customers/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    customers = JSON.parse(response.body, symbolize_names: true)
+
+    customers[:data].each do |customer|
+      expect(customer[:attributes]).to have_key(:id)
+      expect(customer[:attributes][:id]).to be_a(Integer)
+
+      expect(customer[:attributes]).to have_key(:first_name)
+      expect(customer[:attributes][:first_name]).to be_a(String)
+
+      expect(customer[:attributes]).to have_key(:last_name)
+      expect(customer[:attributes][:last_name]).to be_a(String)
+    end
+  end
+
+  it "can find multiple records that match a partial first name" do
+    create_list(:customer, 3)
+    get '/api/v1/customers'
+
+    attribute = "first_name"
+    value = Customer.first.first_name[0..3]
+
+    get "/api/v1/customers/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    customers = JSON.parse(response.body, symbolize_names: true)
+
+    customers[:data].each do |customer|
+      expect(customer[:attributes]).to have_key(:id)
+      expect(customer[:attributes][:id]).to be_a(Integer)
+
+      expect(customer[:attributes]).to have_key(:first_name)
+      expect(customer[:attributes][:first_name]).to be_a(String)
+
+      expect(customer[:attributes]).to have_key(:last_name)
+      expect(customer[:attributes][:last_name]).to be_a(String)
+    end
+  end
+
+  it "can find multiple records that match a partial last name" do
+    create_list(:customer, 3)
+    get '/api/v1/customers'
+
+    attribute = "last_name"
+    value = Customer.first.last_name[0..3]
+
+    get "/api/v1/customers/find_all?#{attribute}=#{value}"
+    expect(response).to be_successful
+
+    customers = JSON.parse(response.body, symbolize_names: true)
+
+    customers[:data].each do |customer|
+      expect(customer[:attributes]).to have_key(:id)
+      expect(customer[:attributes][:id]).to be_a(Integer)
+
+      expect(customer[:attributes]).to have_key(:first_name)
+      expect(customer[:attributes][:first_name]).to be_a(String)
+
+      expect(customer[:attributes]).to have_key(:last_name)
+      expect(customer[:attributes][:last_name]).to be_a(String)
+    end
+  end
 end
