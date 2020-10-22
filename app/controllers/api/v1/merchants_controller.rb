@@ -18,7 +18,7 @@ module Api
       end
 
       def destroy
-        Merchant.delete(params[:id])
+        Merchant.delete_all(params[:id])
       end
 
       def items
