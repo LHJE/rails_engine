@@ -18,7 +18,7 @@ module Api
       end
 
       def destroy
-        render json: Item.delete(params[:id])
+        Item.delete_all(params[:id])
       end
 
       def merchant
