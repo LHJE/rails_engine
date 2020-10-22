@@ -28,6 +28,7 @@ Rails.application.routes.draw do
         get '/find', to: 'search#show'
         get '/find_all', to: 'search#index'
         get '/most_revenue', to: 'search#most_revenue'
+        get '/most_items', to: 'search#most_items'
       end
       resources :merchants
       get "merchants/:id/items", to: 'merchants#items'
