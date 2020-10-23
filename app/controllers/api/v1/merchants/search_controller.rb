@@ -30,6 +30,13 @@ module Api
 
           render json: MerchantSerializer.new(Merchant.where(id: merchant_ids))
         end
+
+        # def most_items
+        #
+        #
+        #   require "pry"; binding.pry
+        #
+        # end
       end
     end
   end
