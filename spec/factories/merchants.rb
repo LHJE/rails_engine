@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :merchant do
-    name { "Wizard Co" }
+    name { Faker::IndustrySegments.sub_sector }
   end
 end

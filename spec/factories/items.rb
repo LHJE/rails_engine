@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :item do
-    name { "Good Coffee" }
-    description { "It's pretty good" }
-    unit_price { "12345" }
+    name { Faker::Coffee.blend_name }
+    description { Faker::Coffee.notes }
+    unit_price { Faker::Number.decimal(l_digits: 2) }
     merchant
   end
 end

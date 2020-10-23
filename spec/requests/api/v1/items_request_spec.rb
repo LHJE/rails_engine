@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Items API" do
+RSpec.describe "Items API" do
   it "sends a list of items" do
     create_list(:item, 3)
 
@@ -50,7 +50,7 @@ describe "Items API" do
   end
 
   it "can create a new item" do
-    item_params = ({
+    body = ({
                     name: 'Socks',
                     description: 'Great socks',
                     unit_price: 234,
@@ -58,14 +58,15 @@ describe "Items API" do
                   })
     headers = {"CONTENT_TYPE" => "application/json"}
 
-    post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
+    post "/api/v1/items", headers: headers, params: JSON.generate(body)
+
     created_item = Item.last
 
     expect(response).to be_successful
-    expect(created_item.name).to eq(item_params[:name])
-    expect(created_item.description).to eq(item_params[:description])
-    expect(created_item.unit_price).to eq(item_params[:unit_price])
-    expect(created_item.merchant_id).to eq(item_params[:merchant_id])
+    expect(created_item.name).to be_a(String)
+    expect(created_item.description).to be_a(String)
+    expect(created_item.unit_price).to be_a(Integer)
+    expect(created_item.merchant_id).to be_a(Integer)
   end
 
   it "can update an existing item" do
@@ -104,13 +105,9 @@ describe "Items API" do
   end
 
   it "can get merchant specific to the item " do
-    create_list(:merchant, 3)
-
-    get '/api/v1/merchants'
-
     id = create(:item).id
 
-    get "/api/v1/items/#{id}/merchants"
+    get "/api/v1/items/#{id}/merchant"
 
     expect(response).to be_successful
 
@@ -162,21 +159,20 @@ describe "Items API" do
     expect(response).to be_successful
 
     item = JSON.parse(response.body, symbolize_names: true)
+    expect(item[:data][:attributes]).to have_key(:id)
+    expect(item[:data][:attributes][:id]).to eq(Item.first.id)
 
-    expect(item[:data][0][:attributes]).to have_key(:id)
-    expect(item[:data][0][:attributes][:id]).to eq(Item.first.id)
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to eq(Item.first.name)
 
-    expect(item[:data][0][:attributes]).to have_key(:name)
-    expect(item[:data][0][:attributes][:name]).to eq(Item.first.name)
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to eq(Item.first.description)
 
-    expect(item[:data][0][:attributes]).to have_key(:description)
-    expect(item[:data][0][:attributes][:description]).to eq(Item.first.description)
+    expect(item[:data][:attributes]).to have_key(:unit_price)
+    expect(item[:data][:attributes][:unit_price]).to eq(Item.first.unit_price)
 
-    expect(item[:data][0][:attributes]).to have_key(:unit_price)
-    expect(item[:data][0][:attributes][:unit_price]).to eq(Item.first.unit_price)
-
-    expect(item[:data][0][:attributes]).to have_key(:merchant_id)
-    expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
   it "can find a single record that matches a partial name" do
@@ -184,27 +180,27 @@ describe "Items API" do
     get '/api/v1/items'
 
     attribute = "name"
-    value = Item.first.name[0..3]
+    value = Item.first.name[0..2]
 
     get "/api/v1/items/find?#{attribute}=#{value}"
     expect(response).to be_successful
 
     item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(item[:data][0][:attributes]).to have_key(:id)
-    expect(item[:data][0][:attributes][:id]).to eq(Item.first.id)
+    expect(item[:data][:attributes]).to have_key(:id)
+    expect(item[:data][:attributes][:id]).to eq(Item.first.id)
 
-    expect(item[:data][0][:attributes]).to have_key(:name)
-    expect(item[:data][0][:attributes][:name]).to eq(Item.first.name)
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to eq(Item.first.name)
 
-    expect(item[:data][0][:attributes]).to have_key(:description)
-    expect(item[:data][0][:attributes][:description]).to eq(Item.first.description)
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to eq(Item.first.description)
 
-    expect(item[:data][0][:attributes]).to have_key(:unit_price)
-    expect(item[:data][0][:attributes][:unit_price]).to eq(Item.first.unit_price)
+    expect(item[:data][:attributes]).to have_key(:unit_price)
+    expect(item[:data][:attributes][:unit_price]).to eq(Item.first.unit_price)
 
-    expect(item[:data][0][:attributes]).to have_key(:merchant_id)
-    expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
   it "can find a single record that matches a description" do
@@ -219,20 +215,20 @@ describe "Items API" do
 
     item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(item[:data][0][:attributes]).to have_key(:id)
-    expect(item[:data][0][:attributes][:id]).to eq(Item.first.id)
+    expect(item[:data][:attributes]).to have_key(:id)
+    expect(item[:data][:attributes][:id]).to eq(Item.first.id)
 
-    expect(item[:data][0][:attributes]).to have_key(:name)
-    expect(item[:data][0][:attributes][:name]).to eq(Item.first.name)
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to eq(Item.first.name)
 
-    expect(item[:data][0][:attributes]).to have_key(:description)
-    expect(item[:data][0][:attributes][:description]).to eq(Item.first.description)
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to eq(Item.first.description)
 
-    expect(item[:data][0][:attributes]).to have_key(:unit_price)
-    expect(item[:data][0][:attributes][:unit_price]).to eq(Item.first.unit_price)
+    expect(item[:data][:attributes]).to have_key(:unit_price)
+    expect(item[:data][:attributes][:unit_price]).to eq(Item.first.unit_price)
 
-    expect(item[:data][0][:attributes]).to have_key(:merchant_id)
-    expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
   it "can find a single record that matches a partial description" do
@@ -247,20 +243,20 @@ describe "Items API" do
 
     item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(item[:data][0][:attributes]).to have_key(:id)
-    expect(item[:data][0][:attributes][:id]).to eq(Item.first.id)
+    expect(item[:data][:attributes]).to have_key(:id)
+    expect(item[:data][:attributes][:id]).to eq(Item.first.id)
 
-    expect(item[:data][0][:attributes]).to have_key(:name)
-    expect(item[:data][0][:attributes][:name]).to eq(Item.first.name)
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to eq(Item.first.name)
 
-    expect(item[:data][0][:attributes]).to have_key(:description)
-    expect(item[:data][0][:attributes][:description]).to eq(Item.first.description)
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to eq(Item.first.description)
 
-    expect(item[:data][0][:attributes]).to have_key(:unit_price)
-    expect(item[:data][0][:attributes][:unit_price]).to eq(Item.first.unit_price)
+    expect(item[:data][:attributes]).to have_key(:unit_price)
+    expect(item[:data][:attributes][:unit_price]).to eq(Item.first.unit_price)
 
-    expect(item[:data][0][:attributes]).to have_key(:merchant_id)
-    expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
   it "can find a single record that matches a unit_price" do
@@ -275,20 +271,20 @@ describe "Items API" do
 
     item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(item[:data][0][:attributes]).to have_key(:id)
-    expect(item[:data][0][:attributes][:id]).to eq(Item.first.id)
+    expect(item[:data][:attributes]).to have_key(:id)
+    expect(item[:data][:attributes][:id]).to eq(Item.first.id)
 
-    expect(item[:data][0][:attributes]).to have_key(:name)
-    expect(item[:data][0][:attributes][:name]).to eq(Item.first.name)
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to eq(Item.first.name)
 
-    expect(item[:data][0][:attributes]).to have_key(:description)
-    expect(item[:data][0][:attributes][:description]).to eq(Item.first.description)
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to eq(Item.first.description)
 
-    expect(item[:data][0][:attributes]).to have_key(:unit_price)
-    expect(item[:data][0][:attributes][:unit_price]).to eq(Item.first.unit_price)
+    expect(item[:data][:attributes]).to have_key(:unit_price)
+    expect(item[:data][:attributes][:unit_price]).to eq(Item.first.unit_price)
 
-    expect(item[:data][0][:attributes]).to have_key(:merchant_id)
-    expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
   it "can find a single record that matches a merchant_id" do
@@ -303,20 +299,20 @@ describe "Items API" do
 
     item = JSON.parse(response.body, symbolize_names: true)
 
-    expect(item[:data][0][:attributes]).to have_key(:id)
-    expect(item[:data][0][:attributes][:id]).to eq(Item.first.id)
+    expect(item[:data][:attributes]).to have_key(:id)
+    expect(item[:data][:attributes][:id]).to eq(Item.first.id)
 
-    expect(item[:data][0][:attributes]).to have_key(:name)
-    expect(item[:data][0][:attributes][:name]).to eq(Item.first.name)
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to eq(Item.first.name)
 
-    expect(item[:data][0][:attributes]).to have_key(:description)
-    expect(item[:data][0][:attributes][:description]).to eq(Item.first.description)
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to eq(Item.first.description)
 
-    expect(item[:data][0][:attributes]).to have_key(:unit_price)
-    expect(item[:data][0][:attributes][:unit_price]).to eq(Item.first.unit_price)
+    expect(item[:data][:attributes]).to have_key(:unit_price)
+    expect(item[:data][:attributes][:unit_price]).to eq(Item.first.unit_price)
 
-    expect(item[:data][0][:attributes]).to have_key(:merchant_id)
-    expect(item[:data][0][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to eq(Item.first.merchant_id)
   end
 
   it "can find a multiple records that match an name" do

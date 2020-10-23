@@ -18,17 +18,18 @@ module Api
       end
 
       def destroy
-        render json: Item.delete(params[:id])
+        Item.delete(params[:id])
       end
 
       def merchant
-        render json: MerchantSerializer.new(Merchant.find(params[:id]))
+        render json: MerchantSerializer.new(Merchant.find(Item.find(params[:id])[:merchant_id]))
       end
 
       private
 
       def item_params
-        params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
+        params.permit(:name, :description, :unit_price, :merchant_id)
+        # params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
       end
     end
   end
