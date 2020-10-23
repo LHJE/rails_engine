@@ -29,7 +29,7 @@ module Api
 
       def item_params
         params.permit(:name, :description, :unit_price, :merchant_id)
-        params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
+        # params.require(:item).permit(:name, :description, :unit_price, :merchant_id)
       end
     end
   end

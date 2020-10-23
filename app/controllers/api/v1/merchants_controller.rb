@@ -29,7 +29,7 @@ module Api
 
       def merchant_params
         params.permit(:name)
-        params.require(:merchant).permit(:name)
+        # params.require(:merchant).permit(:name)
       end
     end
   end
